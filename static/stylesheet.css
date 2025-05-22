@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'ITC Benguiat Std Book Cn';
+    src: url('BenguiatStd-BoldCondensed.woff2') format('woff2'),
+        url('BenguiatStd-BoldCondensed.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+.itc-benguiat {
+    font-family: 'ITC Benguiat Std Book Cn', sans-serif;
+    font-weight: bold;
+    font-style: normal;
+}

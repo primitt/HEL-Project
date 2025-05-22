@@ -1,0 +1,118 @@
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="utf-8" />
+    <title>The Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="./static/stylesheet.css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body class="bg-black">
+    <div class="flex flex-col items-center justify-center min-h-screen">
+        <div class="" id="titlescreen">
+            <h1 class="text-6xl font-bold itc-benguiat">The Assignment</h1>
+            <h2 class="text-2xl">A mini choose-your-own-adventure game</h2>
+            <div class="flex flex-col items-center justify-center mt-4">
+                <button id="start" class="btn btn-primary bg-white text-black">Start</button>
+            </div>
+        </div>
+        <div id="gamescreen" class="hidden">
+            <div class="divider w-5/8 mx-auto"></div>
+            <p class="text-center text-xl w-5/8 mx-auto" id="game_desc">
+                Your alarm blares. Read on the clock: 7:30 AM. You have no reason to wake up until a paper slides
+                through your apartment's mail slot. It's a letter from the Bureau. The letter reads: "You must report to
+                the Bureau. Your interview is today."
+                1 month ago, you left your office job because you felt as if it had no meaning. However, finding a
+                meaningful job is difficult, so in a last-ditch attempt, you apply for a job at the Bureau in search of
+                one.</p>
+            <div class="divider w-5/8 mx-auto"></div>
+            <div class="flex justify-center items-center mt-4">
+                <div id="game_opts" class="join gap-4">
+                    <button class="btn bg-white text-black join-item">Stay home</button>
+                    <button class="btn bg-white text-black join-item">Go to the Bureau</button>
+                </div>
+            </div>
+        </div>
+        <div id="endscreen" class="hidden">
+            <h1 class="text-5xl font-bold itc-benguiat">You have reached a conclusion: </h1>
+            <h2 class="text-3xl text-center" id="end_desc"></h2>
+            <div class="flex flex-col items-center justify-center mt-4">
+            <button id="restart" class="btn btn-primary bg-white text-black" onclick="restartGame()">Restart</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // on start button clicked, fade out the title screen and fade in the game content
+    var game_data = {}
+    var current_node = "";
+
+    function restartGame() {
+        $("#endscreen").fadeOut(500, function () {
+            $("#titlescreen").fadeIn(500);
+            current_node = game_data.startNode;
+            updateGameContent();
+        });
+    }
+    function updateGameContent() {
+        // update the game description
+        $("#game_desc").text(game_data.nodes[current_node].description);
+        // update the game options
+        $("#game_opts").empty();
+        if (game_data.nodes[current_node].choices.length == 1 && game_data.nodes[current_node].choices[0].text == "[Continue]") {
+            const button = $("<button></button>")
+                .addClass("btn bg-white text-black join-item")
+                .text(game_data.nodes[current_node].choices[0].text)
+                .click(function () {
+                    $("#gamescreen").fadeOut(500, function () {
+                        // fade in the end screen
+                        $("#endscreen").fadeIn(500);
+                        current_node = game_data.nodes[current_node].choices[0].target;
+                        $("#end_desc").text(game_data.nodes[current_node].description);
+                    });
+                });
+            $("#game_opts").append(button);
+        } else {
+            for (let i = 0; i < game_data.nodes[current_node].choices.length; i++) {
+                const option = game_data.nodes[current_node].choices[i];
+                const button = $("<button></button>")
+                    .addClass("btn bg-white text-black join-item")
+                    .text(option.text)
+                    .click(function () {
+                        $("#gamescreen").fadeOut(500, function () {
+                            current_node = option.target;
+                            updateGameContent();
+                            $("#gamescreen").fadeIn(500);
+                        });
+                    });
+                $("#game_opts").append(button);
+            }
+        }
+    }
+    $(document).ready(function () {
+        $.getJSON("./static/story.json", function(data) {
+            game_data = data;
+            current_node = game_data.startNode;
+            console.log(game_data);
+        });
+        $("#start").click(function () {
+            $("#titlescreen").fadeOut(500, function () {
+                updateGameContent();
+                $("#gamescreen").fadeIn(500);
+            });
+        });
+    });
+</script>
+
+</html>
