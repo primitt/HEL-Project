@@ -48,7 +48,8 @@
             <h1 class="text-5xl font-bold itc-benguiat">You have reached a conclusion: </h1>
             <h2 class="text-3xl text-center" id="end_desc"></h2>
             <div class="flex flex-col items-center justify-center mt-4">
-            <button id="restart" class="btn btn-primary bg-white text-black" onclick="restartGame()">Restart</button>
+                <button id="restart" class="btn btn-primary bg-white text-black"
+                    onclick="restartGame()">Restart</button>
             </div>
         </div>
     </div>
@@ -57,29 +58,42 @@
     // on start button clicked, fade out the title screen and fade in the game content
     var game_data = {}
     var current_node = "";
-
+    var sleep_again_times = 0;
     function restartGame() {
         $("#endscreen").fadeOut(500, function () {
             $("#titlescreen").fadeIn(500);
             current_node = game_data.startNode;
+            sleep_again_times = 0;
             updateGameContent();
         });
     }
+    function decodeHtml(html) {
+        const txt = document.createElement("textarea");
+        txt.innerHTML = html;
+        return txt.value;
+    }
+
     function updateGameContent() {
-        // update the game description
-        $("#game_desc").text(game_data.nodes[current_node].description);
+        // decode and update the game description
+        const desc = decodeHtml(game_data.nodes[current_node].description);
+        $("#game_desc").html(desc);
+
         // update the game options
         $("#game_opts").empty();
+
         if (game_data.nodes[current_node].choices.length == 1 && game_data.nodes[current_node].choices[0].text == "[Continue]") {
             const button = $("<button></button>")
                 .addClass("btn bg-white text-black join-item")
-                .text(game_data.nodes[current_node].choices[0].text)
+                .html(game_data.nodes[current_node].choices[0].text)
                 .click(function () {
                     $("#gamescreen").fadeOut(500, function () {
                         // fade in the end screen
                         $("#endscreen").fadeIn(500);
                         current_node = game_data.nodes[current_node].choices[0].target;
-                        $("#end_desc").text(game_data.nodes[current_node].description);
+
+                        // decode and update end description
+                        const endDesc = decodeHtml(game_data.nodes[current_node].description);
+                        $("#end_desc").html(endDesc);
                     });
                 });
             $("#game_opts").append(button);
@@ -88,8 +102,19 @@
                 const option = game_data.nodes[current_node].choices[i];
                 const button = $("<button></button>")
                     .addClass("btn bg-white text-black join-item")
-                    .text(option.text)
+                    .html(option.text)
                     .click(function () {
+                        if (option.target == "stay_home") {
+                            sleep_again_times++;
+                            if (sleep_again_times > 3) {
+                                current_node = "world_moves";
+                                $("#gamescreen").fadeOut(500, function () {
+                                    updateGameContent();
+                                    $("#gamescreen").fadeIn(500);
+                                });
+                                return;
+                            }
+                        }
                         $("#gamescreen").fadeOut(500, function () {
                             current_node = option.target;
                             updateGameContent();
@@ -100,8 +125,9 @@
             }
         }
     }
+
     $(document).ready(function () {
-        $.getJSON("./static/story.json", function(data) {
+        $.getJSON("./static/story.json", function (data) {
             game_data = data;
             current_node = game_data.startNode;
             console.log(game_data);

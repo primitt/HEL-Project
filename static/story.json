@@ -1,137 +1,140 @@
 {
-    "startNode": "intro",
-    "nodes": {
-      "intro": {
-        "id": "intro",
-        "description": "*Brr Brr Brr Brr*\nYour alarm blares. Read on the clock: 7:30 AM. You have no reason to wake up until a paper slides through your apartment's mail slot. It's a letter from the Bureau. The letter reads: \"You must report to the Bureau. Your interview is today.\"\n1 month ago, you left your office job because you felt as if it had no meaning. However, finding a meaningful job is difficult, so in a last-ditch attempt, you apply for a job at the Bureau in search of one.",
-        "choices": [
-          {
-            "text": "Stay home",
-            "target": "stay_home"
-          },
-          {
-            "text": "Go to the Bureau",
-            "target": "bureau_arrive"
-          }
-        ]
-      },
-      "stay_home": {
-        "id": "stay_home",
-        "description": "Nothing changes. The note is still on the table and you head back to bed.\nAfter a while, you wake up again, and you....",
-        "choices": [
-          {
-            "text": "Sleep again",
-            "target": "stay_home",
-            "condition": {
-              "variable": "sleepAttempts",
-              "operator": "greaterThan",
-              "value": 3,
-              "targetIfTrue": "world_moves"
-            }
-          },
-          {
-            "text": "Go to the Bureau after all",
-            "target": "bureau_arrive"
-          }
-        ]
-      },
-      "world_moves": {
-        "id": "world_moves",
-        "description": "The world moves without you. You disappear.",
-        "choices": [
-          {
-            "text": "[Continue]",
-            "target": "indifferent_end"
-          }
-        ]
-      },
-      "indifferent_end": {
-        "id": "indifferent_end",
-        "description": "Indifferent Ending",
-        "choices": []
-      },
-      "bureau_arrive": {
-        "id": "bureau_arrive",
-        "description": "You head out onto the gray streets. The Bureau stands 200 stories tall with a fenced-off perimeter with a guard for every citizen. You hand your letter to a guard, enter the building, and head up the elevator. You exit the elevator and are greeted by a large front desk.\nThe clerk asks you: \"Welcome. Please take a seat and wait for your number to be called.\"\nYou are handed a number. It says #707.\nYou look over at a display, which shows Currently Serving: #101\nOthers sit in the chair staring ahead, sitting quietly.",
-        "choices": [
-          {
-            "text": "Sit there quietly and wait",
-            "target": "interview_wait"
-          },
-          {
-            "text": "Wait a while, but then leave",
-            "target": "leave_early"
-          }
-        ]
-      },
-      "interview_wait": {
-        "id": "interview_wait",
-        "description": "After a while, he is called into the interview room.\nYour evaluation begins.\nThe interviewer asks: \"Why do you want to work at the Bureau\"",
-        "choices": [
-          {
-            "text": "List all accomplishments",
-            "target": "interview_ask_accomplishments"
-          },
-          {
-            "text": "Lose interest - \"I do not know\"",
-            "target": "absurdist_end"
-          }
-        ]
-      },
-      "leave_early": {
-        "id": "leave_early",
-        "description": "You wait for about an hour, but start to feel as if this will not change anything. There is no point in trying to find a meaning to feel fulfilled.\nYou stand up and start to leave the room. Behind you, a voice yells:\n\"You can't leave! You have to finish your application to stay here!\"\nYou leave anyway.",
-        "choices": [
-          {
-            "text": "[Continue]",
-            "target": "absurdist_end"
-          }
-        ]
-      },
-      "interview_ask_accomplishments": {
-        "id": "interview_ask_accomplishments",
-        "description": "Interviewer: \"You are very accomplished. You will fit right in. But one last thing: This job requires you to be always truthful.\"\nYou are handed a big packet with all the conditions for this job.",
-        "choices": [
-          {
-            "text": "You agree",
-            "target": "agree_job"
-          },
-          {
-            "text": "Disagree but comply",
-            "target": "disagree_comply_job"
-          }
-        ]
-      },
-      "agree_job": {
-        "id": "agree_job",
-        "description": "You agree and you feel content as you feel like you are one step closer to finding meaning for yourself.",
-        "choices": [
-          {
-            "text": "[Continue]",
-            "target": "existentialist_end"
-          }
-        ]
-      },
-      "existentialist_end": {
-        "id": "existentialist_end",
-        "description": "Existentialist ending",
-        "choices": []
-      },
-      "disagree_comply_job": {
-        "id": "disagree_comply_job",
-        "description": "The condition feels hollow, perhaps even a tool of control. You disagree with its spirit, yet you need this. With a sigh that acknowledges the inherent absurdity, you comply to get the job.",
-        "choices": [
-          {
-            "text": "[Continue]",
-            "target": "absurdist_end"
-          }
-        ]
-      },
-      "absurdist_end": {
-        "id": "absurdist_end",
-        "description": "Absurdist",
-        "choices": []
-      }
+  "startNode": "intro",
+  "nodes": {
+    "intro": {
+      "id": "intro",
+      "description": "*Brr Brr Brr Brr*<br>Your alarm blares. Read on the clock: 7:30 AM. You have no reason to wake up until a paper slides through your apartment's mail slot. It's a letter from the Bureau. The letter reads: \"You must report to the Bureau. Your interview is today.\"<br>1 month ago, you left your office job because you felt as if it had no meaning. However, finding a meaningful job is difficult, so in a last-ditch attempt, you apply for a job at the Bureau in search of one.",
+      "choices": [
+        {
+          "text": "Stay home",
+          "target": "stay_home"
+        },
+        {
+          "text": "Go to the Bureau",
+          "target": "bureau_arrive"
+        }
+      ]
+    },
+    "stay_home": {
+      "id": "stay_home",
+      "description": "Nothing changes. The note is still on the table and you head back to bed.<br>After a while, you wake up again, and you....",
+      "choices": [
+        {
+          "text": "Sleep again",
+          "target": "stay_home"
+        },
+        {
+          "text": "Go to the Bureau after all",
+          "target": "bureau_arrive"
+        }
+      ]
+    },
+    "world_moves": {
+      "id": "world_moves",
+      "description": "The world moves without you. You disappear.",
+      "choices": [
+        {
+          "text": "[Continue]",
+          "target": "indifferent_end"
+        }
+      ]
+    },
+    "indifferent_end": {
+      "id": "indifferent_end",
+      "description": "Indifferent Ending",
+      "choices": []
+    },
+    "bureau_arrive": {
+      "id": "bureau_arrive",
+      "description": "You head out onto the gray streets. The Bureau stands 200 stories tall with a fenced-off perimeter with a guard for every citizen. You hand your letter to a guard, enter the building, and head up the elevator. You exit the elevator and are greeted by a large front desk.<br>The clerk asks you: \"Welcome. Please take a seat and wait for your number to be called.\"<br>You are handed a number. It says #707.<br>You look over at a display, which shows Currently Serving: #101<br>Others sit in the chair staring ahead, sitting quietly.",
+      "choices": [
+        {
+          "text": "Sit there quietly and wait",
+          "target": "interview_wait"
+        },
+        {
+          "text": "Wait a while, but then leave",
+          "target": "leave_early"
+        }
+      ]
+    },
+    "interview_wait": {
+      "id": "interview_wait",
+      "description": "After a while, he is called into the interview room.<br>Your evaluation begins.<br>The interviewer asks: \"Why do you want to work at the Bureau\"",
+      "choices": [
+        {
+          "text": "List all accomplishments",
+          "target": "interview_ask_accomplishments"
+        },
+        {
+          "text": "Lose interest",
+          "target": "interview_lose_interest"
+        }
+      ]
+    },
+    "interview_lose_interest": {
+      "id": "interview_lose_interest",
+      "description": "You say: \"I don't see why it matters.\"<br>The interviewer stares at you for a moment, then looks down at their clipboard.<br>\"That is not a correct answer. You will not qualify for a job here.\"<br>You nod once. No argument. No regret.<br>You leave the room. The hallway outside is silent. No one notices you. The world continues—unchanged, unbothered. Nothing comes next. And somehow, that is enough.",
+      "choices": [
+        {
+          "text": "[Continue]",
+          "target": "absurdist_end"
+        }
+      ]
+    },
+    "leave_early": {
+      "id": "leave_early",
+      "description": "You wait for about an hour, but start to feel as if this will not change anything. There is no point in trying to find a meaning to feel fulfilled.<br>You stand up and start to leave the room. Behind you, a voice yells:<br>\"You can't leave! You have to finish your application to stay here!\"<br>You leave anyway.",
+      "choices": [
+        {
+          "text": "[Continue]",
+          "target": "absurdist_end"
+        }
+      ]
+    },
+    "interview_ask_accomplishments": {
+      "id": "interview_ask_accomplishments",
+      "description": "Interviewer: \"You are very accomplished. You will fit right in. But one last thing: This job requires you to be always truthful.\"<br>You are handed a big packet with all the conditions for this job.",
+      "choices": [
+        {
+          "text": "You agree",
+          "target": "agree_job"
+        },
+        {
+          "text": "Disagree but comply",
+          "target": "disagree_comply_job"
+        }
+      ]
+    },
+    "agree_job": {
+      "id": "agree_job",
+      "description": "You agree and you feel content as you feel like you are one step closer to finding meaning for yourself.",
+      "choices": [
+        {
+          "text": "[Continue]",
+          "target": "existentialist_end"
+        }
+      ]
+    },
+    "existentialist_end": {
+      "id": "existentialist_end",
+      "description": "Existentialist Ending",
+      "choices": []
+    },
+    "disagree_comply_job": {
+      "id": "disagree_comply_job",
+      "description": "The condition feels hollow, perhaps even a tool of control. You disagree with its spirit, yet you need this. With a sigh that acknowledges the inherent absurdity, you comply to get the job.",
+      "choices": [
+        {
+          "text": "[Continue]",
+          "target": "absurdist_end"
+        }
+      ]
+    },
+    "absurdist_end": {
+      "id": "absurdist_end",
+      "description": "Absurdist Ending",
+      "choices": []
     }
   }
-  
+}
